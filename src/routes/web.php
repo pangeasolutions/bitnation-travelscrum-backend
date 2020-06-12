@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function ($request) {
+Route::post('/test', function ($request) {
 
     /*
     $users = DB::select('select * git commfrom users where id = ?', [1]);
