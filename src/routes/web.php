@@ -21,6 +21,6 @@ Route::get('/test', function () {
 
     $users = DB::select('select * from test where id = ?', [1]);
 
-    return 'hello user: '.$users;
+    return 'hello user: '.var_dump($users);
 
 });
