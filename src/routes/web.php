@@ -30,10 +30,47 @@ Route::get('/test', function () {
 
 });
 
-Route::get('/blockchain/passport/create', function () {
+Route::get('/blockchain/passport/add', function () {
 
-    $data = $request->all();
+    $data = file_get_contents("php://input"); //
+
+    $json = json_decode($data);
+
+    if($json == null){
+
+        return 'Received NULL Json';
+
+    }else{
+
+        return 'Received: '. $data;
+
+    }
+
+
+
+});
+
+Route::get('/blockchain/passport/read', function () {
+
+    $data = file_get_contents("php://input"); // json_decode();
 
     return 'Received: '. $data;
 
 });
+
+Route::get('/blockchain/document/add', function () {
+
+    $data = file_get_contents("php://input"); // json_decode();
+
+    return 'Received: '. $data;
+
+});
+
+Route::get('/blockchain/document/read', function () {
+
+    $data = file_get_contents("php://input"); // json_decode();
+
+    return 'Received: '. $data;
+
+});
+
