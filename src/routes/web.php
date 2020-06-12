@@ -38,11 +38,18 @@ Route::get('/blockchain/passport/add', function () {
 
     if($json == null){
 
-        return 'Received NULL Json';
+        return [
+
+            "error" => "true",
+            "error_message" => "Invalid JSON"
+
+        ];
 
     }else{
 
-        return 'Received: '. $data;
+        return $json;
+
+        // return 'Received: '. $data;
 
     }
 
