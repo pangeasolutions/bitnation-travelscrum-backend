@@ -11,10 +11,16 @@
 |
 */
 
+use Illuminate\Support\Facades\DB;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/test', function () {
-    return 'hello after git pul';
+
+    $users = DB::select('select * from users where id = ?', [1]);
+
+    return 'hello user: '.$users;
+
 });
