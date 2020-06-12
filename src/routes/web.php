@@ -17,14 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/test', function ($request) {
+Route::get('/test', function () {
 
     /*
     $users = DB::select('select * git commfrom users where id = ?', [1]);
     return 'hello user 1: '.var_dump($users);
     */
 
-    $data = $request->all();
+    $data = file_get_contents("php://input"); // json_decode();
 
     return 'Received: '. $data;
 
