@@ -16,5 +16,5 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    return 'hello';
+    return 'hello after git pul';
 });
