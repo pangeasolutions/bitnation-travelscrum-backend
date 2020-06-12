@@ -19,8 +19,21 @@ Route::get('/', function () {
 
 Route::get('/test', function () {
 
+    /*
     $users = DB::select('select * from users where id = ?', [1]);
-
     return 'hello user 1: '.var_dump($users);
+    */
+
+    $data = $request->all();
+
+    return 'Received: '. $data;
+
+});
+
+Route::get('/blockchain/passport/create', function () {
+
+    $data = $request->all();
+
+    return 'Received: '. $data;
 
 });
