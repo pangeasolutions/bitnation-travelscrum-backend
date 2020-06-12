@@ -17,10 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function (Request $request) {
+Route::get('/test', function ($request) {
 
     /*
-    $users = DB::select('select * from users where id = ?', [1]);
+    $users = DB::select('select * git commfrom users where id = ?', [1]);
     return 'hello user 1: '.var_dump($users);
     */
 
