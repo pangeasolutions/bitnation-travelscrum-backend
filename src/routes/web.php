@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
+Route::get('/test', function (Request $request) {
 
     /*
     $users = DB::select('select * from users where id = ?', [1]);
