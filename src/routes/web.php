@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('/test', function () {
 
-    $users = DB::select('select * from users where id = ?', [1]);
+    $users = DB::select('select * from test where id = ?', [1]);
 
     return 'hello user: '.$users;
 
