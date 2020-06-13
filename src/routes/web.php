@@ -51,7 +51,7 @@ Route::get('/blockchain/passport/add', function () {
 
             $file_name = $json->file_name;
             $file_hash = $json->file_hash;
-            $signature = $json->certificate;
+            $certificate = $json->certificate;
 
         }catch(Exception $e){
 
@@ -63,7 +63,7 @@ Route::get('/blockchain/passport/add', function () {
 
 
 
-        if( empty( $file_name) || empty($file_hash) || empty($signature ) ){
+        if( empty( $file_name) || empty($file_hash) || empty($certificate ) ){
 
             return [
 
