@@ -47,9 +47,20 @@ Route::get('/blockchain/passport/add', function () {
 
     }else{
 
-        $file_name = $json->file_name;
-        $file_hash = $json->file_hash;
-        $signature = $json->certificate;
+        try{
+
+            $file_name = $json->file_name;
+            $file_hash = $json->file_hash;
+            $signature = $json->certificate;
+
+        }catch(Exception $e){
+
+            $file_name = "";
+            $file_hash = "";
+            $signature = "";
+
+        }
+
 
 
         if( empty( $file_name) || empty($file_hash) || empty($signature ) ){
