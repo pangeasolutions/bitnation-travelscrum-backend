@@ -92,13 +92,13 @@ Route::get('/blockchain/passport/add', function () {
 
         DB::insert('insert into blockchain_passports (file_name,file_hash,certificate,block_hash) values (?, ?, ?, ? )', [ $file_name,$file_hash,$certificate,$block_hash]);
 
-        $last = DB::select('SELECT id FROM blockchain_passports ORDER BY id DESC LIMIT 1 ');
+        $passport = DB::select('SELECT id FROM blockchain_passports ORDER BY id DESC LIMIT 1 ');
 
         return [
 
             "error" => "false",
             "error_message" => "",
-            "id_passport" => $last["id"]
+            "id_passport" => $passport[0]["id"]
 
         ];
 
