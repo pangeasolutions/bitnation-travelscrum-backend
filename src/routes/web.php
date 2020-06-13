@@ -94,17 +94,17 @@ Route::get('/blockchain/passport/add', function () {
 
         $passport = DB::select('SELECT * FROM blockchain_passports ORDER BY id DESC LIMIT 1 ');
 
-        var_dump($passport);
+        // var_dump($passport);
 
-        /*
+
         return [
 
             "error" => "false",
             "error_message" => "",
-            "id_passport" => $passport[0]["id"]
+            "id_passport" => $passport[0]->id
 
         ];
-        */
+
 
     }
 
