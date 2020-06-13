@@ -47,21 +47,92 @@ Route::get('/blockchain/passport/add', function () {
 
     }else{
 
-        return $json;
+        $file_name = $json->file_name;
+        $file_hash = $json->file_hash;
+        $signature = $json->certificate;
 
-        // return 'Received: '. $data;
+
+        if( empty( $file_name) || empty($file_hash) || empty($signature ) ){
+
+            return [
+
+                "error" => "true",
+                "error_message" => "Missing Parameters"
+
+            ];
+
+        }
+
+        $last = DB::select('select * FROM blockchain_passports ORDER BY id DESC LIMIT 1 ', []);
+
+        if(empty($last["id"])){
+
+            $last_hash = "";
+
+        }else{
+
+            $last_hash = $s["block_hash"];
+
+        }
+
+        $content = $file_name.$file_hash.$certificate;
+
+        $block_hash = md5($last_hash.$content);
+
+        DB::insert('insert into blockchain_passports (id,file_name,file_hash,certificate,block_hash) values (?,?, ?, ?, ? )', ['', $file_name,$file_hash,$certificate,$block_hash]);
+
+        $last = DB::select('select * FROM blockchain_passports ORDER BY id DESC LIMIT 1 ', []);
+
+        return [
+
+            "error" => "false",
+            "error_message" => "",
+            "id_passport" => $last["id"]
+
+        ];
 
     }
 
-
-
 });
 
-Route::get('/blockchain/passport/read', function () {
+Route::get('/blockchain/passport/read/{id}', function ($id) {
 
-    $data = file_get_contents("php://input"); // json_decode();
+    if(empty($id)){
 
-    return 'Received: '. $data;
+        return [
+
+            "error" => "true",
+            "error_message" => "Missing Parameters"
+
+        ];
+
+    }
+
+    $passport = DB::select('select * FROM blockchain_passports WHERE id = ? ', [$id]);
+
+    if(empty($id["id"])){
+
+        return [
+
+            "error" => "true",
+            "error_message" => "Passport not found with id:".$passport["id"]
+
+        ];
+
+    }
+
+    return [
+
+        "error" => "false",
+        "error_message" => "",
+        "passport_requested" => $id,
+        "file_name" => $passport["file_name"],
+        "file_hash" => $passport["file_hash"],
+        "block_hash" => $passport["block_hash"],
+
+    ];
+
+    // return 'Received: '. $data;
 
 });
 
