@@ -90,7 +90,7 @@ Route::get('/blockchain/passport/add', function () {
 
         $block_hash = md5($last_hash.$content);
 
-        DB::insert('insert into blockchain_passports (id,file_name,file_hash,certificate,block_hash) values (?,?, ?, ?, ? )', ['', $file_name,$file_hash,$certificate,$block_hash]);
+        DB::insert('insert into blockchain_passports (file_name,file_hash,certificate,block_hash) values (?, ?, ?, ? )', [ $file_name,$file_hash,$certificate,$block_hash]);
 
         $last = DB::select('select * FROM blockchain_passports ORDER BY id DESC LIMIT 1 ', []);
 
