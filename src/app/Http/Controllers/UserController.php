@@ -98,7 +98,7 @@ class UserController extends Controller
         $permissionObject = $reqArray['postData'];
         // Emit event asking to see document
         event(new AskPermissionDocument($permissionObject));
-        return response('', 200);
+        return response($permissionObject, 200);
     }
 
     public function receivePermission(Request $request)
