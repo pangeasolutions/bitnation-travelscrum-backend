@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Events\AskPermissionDocument;
 use Illuminate\Support\Facades\Redis;
 use App\Events\GrantPermissionDocument;
+use App\Events\IssuePrescription;
 use App\Events\RejectPermissionDocument;
 
 class UserController extends Controller
@@ -136,5 +137,17 @@ class UserController extends Controller
         $encryptedDocument =  Redis::get('document-for-' . strVal($userId));
         Redis::del('document-for-' . strVal($userId));
         return json_encode(["encryptedDocument" => $encryptedDocument]);
+    }
+
+    // Handler for user issuing prescription
+    public function issuePrescription(Request $request)
+    {
+        // Get the post data
+        $reqArray = $request->json()->all();
+        // Get the data out of the postData key and move it up a level in the object
+        $prescriptionObject = $reqArray['postData'];
+        // Emit event asking to see document
+        event(new IssuePrescription($prescriptionObject));
+        return response($prescriptionObject, 200);
     }
 }

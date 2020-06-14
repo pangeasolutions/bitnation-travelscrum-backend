@@ -23,4 +23,5 @@ Route::group(['prefix' => '/document'], function () {
     Route::post('/ask-permission', 'UserController@askPermission')->name('ask-permission');
     Route::post('/receive-permission', 'UserController@receivePermission')->name('receive-permission');
     Route::get('/fetch-document',  'UserController@fetchDocument')->name('fetch-document');
+    Route::post('/issue-prescription', 'UserController@issuePrescription')->name('issue-prescription');
 });
