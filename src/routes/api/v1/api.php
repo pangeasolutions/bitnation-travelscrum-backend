@@ -18,3 +18,9 @@ Route::prefix('/user')->group(function () {
     Route::post('/login', 'LoginController@login')->name('login');
     Route::post('/register', 'RegisterController@register')->name('register');
 });
+// Grouping routes that listen for document related actions
+Route::group(['prefix' => '/document'], function () {
+    Route::post('/ask-permission', 'UserController@askPermission')->name('ask-permission');
+    Route::post('/receive-permission', 'UserController@receivePermission')->name('receive-permission');
+    Route::get('/fetch-document',  'UserController@fetchDocument')->name('fetch-document');
+});

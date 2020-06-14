@@ -13,6 +13,8 @@
 
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Redis;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -24,10 +26,11 @@ Route::get('/test', function () {
     return 'hello user 1: '.var_dump($users);
     */
 
-    $data = file_get_contents("php://input"); // json_decode();
+    // $data = file_get_contents("php://input"); // json_decode();
 
-    return 'Received: '. $data;
+    // return 'Received: '. $data;
 
+    return 'test route';
 });
 
 Route::get('/blockchain/passport/add', function () {
@@ -36,7 +39,7 @@ Route::get('/blockchain/passport/add', function () {
 
     $json = json_decode($data);
 
-    if($json == null){
+    if ($json == null) {
 
         return [
 
@@ -44,26 +47,23 @@ Route::get('/blockchain/passport/add', function () {
             "error_message" => "Invalid JSON"
 
         ];
+    } else {
 
-    }else{
-
-        try{
+        try {
 
             $file_name = $json->file_name;
             $file_hash = $json->file_hash;
             $certificate = $json->certificate;
-
-        }catch(Exception $e){
+        } catch (Exception $e) {
 
             $file_name = "";
             $file_hash = "";
             $signature = "";
-
         }
 
 
 
-        if( empty( $file_name) || empty($file_hash) || empty($certificate ) ){
+        if (empty($file_name) || empty($file_hash) || empty($certificate)) {
 
             return [
 
@@ -71,26 +71,23 @@ Route::get('/blockchain/passport/add', function () {
                 "error_message" => "Missing Parameters"
 
             ];
-
         }
 
         $last = DB::select('select * FROM blockchain_passports ORDER BY id DESC LIMIT 1 ', []);
 
-        if(empty($last["id"])){
+        if (empty($last["id"])) {
 
             $last_hash = "";
-
-        }else{
+        } else {
 
             $last_hash = $s["block_hash"];
-
         }
 
-        $content = $file_name.$file_hash.$certificate;
+        $content = $file_name . $file_hash . $certificate;
 
-        $block_hash = md5($last_hash.$content);
+        $block_hash = md5($last_hash . $content);
 
-        DB::insert('insert into blockchain_passports (file_name,file_hash,certificate,block_hash) values (?, ?, ?, ? )', [ $file_name,$file_hash,$certificate,$block_hash]);
+        DB::insert('insert into blockchain_passports (file_name,file_hash,certificate,block_hash) values (?, ?, ?, ? )', [$file_name, $file_hash, $certificate, $block_hash]);
 
         $passport = DB::select('SELECT * FROM blockchain_passports ORDER BY id DESC LIMIT 1 ');
 
@@ -101,15 +98,12 @@ Route::get('/blockchain/passport/add', function () {
             "id_passport" => $passport[0]->id
 
         ];
-
-
     }
-
 });
 
 Route::get('/blockchain/passport/read/{id}', function ($id) {
 
-    if(empty($id)){
+    if (empty($id)) {
 
         return [
 
@@ -117,20 +111,18 @@ Route::get('/blockchain/passport/read/{id}', function ($id) {
             "error_message" => "Missing Parameters"
 
         ];
-
     }
 
     $passport = DB::select('select * FROM blockchain_passports WHERE id = ? ', [$id]);
 
-    if(empty($passport[0]->id)){
+    if (empty($passport[0]->id)) {
 
         return [
 
             "error" => "true",
-            "error_message" => "Passport not found with id:".$id
+            "error_message" => "Passport not found with id:" . $id
 
         ];
-
     }
 
     return [
@@ -152,15 +144,12 @@ Route::get('/blockchain/document/add', function () {
 
     $data = file_get_contents("php://input"); // json_decode();
 
-    return 'Received: '. $data;
-
+    return 'Received: ' . $data;
 });
 
 Route::get('/blockchain/document/read', function () {
 
     $data = file_get_contents("php://input"); // json_decode();
 
-    return 'Received: '. $data;
-
+    return 'Received: ' . $data;
 });
-
