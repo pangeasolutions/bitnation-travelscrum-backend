@@ -23,6 +23,7 @@ class AskPermissionDocument implements ShouldBroadcast
      */
     public function __construct($permissionObject)
     {
+error_log('asked-permission');
         // Set broadcast channel to approver's _id
         $this->channel = $permissionObject['approverId'];
         // Take out the approver details since the user already know his own data
