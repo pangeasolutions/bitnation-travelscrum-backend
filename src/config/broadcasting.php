@@ -32,11 +32,11 @@ return [
 
         'pusher' => [
             'driver' => 'pusher',
-            'key' => env('068face6ba6319840437'),
-            'secret' => env('181736262b7963586ee5'),
-            'app_id' => env('1018888'),
+            'key' => '068face6ba6319840437',
+            'secret' => '181736262b7963586ee5',
+            'app_id' => '1018888',
             'options' => [
-                'cluster' => env('mt1'),
+                'cluster' => 'mt1',
                 'useTLS' => true,
             ],
         ],
